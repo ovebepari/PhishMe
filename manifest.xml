@@ -4,13 +4,13 @@
   <Version>1.0.0.0</Version>
   <ProviderName>Ove Bepari</ProviderName>
   <DefaultLocale>en-US</DefaultLocale>
-  <DisplayName DefaultValue="PhishIt"/>
+  <DisplayName DefaultValue="PhishMe"/>
   <Description DefaultValue="Report Phish Emails to System Admin"/>
-  <IconUrl DefaultValue="https://cdn.jsdelivr.net/gh/ovebepari/PhishIt@0.1/assets/icon-32.png"/>
-  <HighResolutionIconUrl DefaultValue="https://cdn.jsdelivr.net/gh/ovebepari/PhishIt@0.1/assets/icon-80.png"/>
-  <SupportUrl DefaultValue="https://github.com/ovebepari/PhishIt"/>
+  <IconUrl DefaultValue="https://cdn.jsdelivr.net/gh/ovebepari/PhishMe@0.1/assets/icon-32.png"/>
+  <HighResolutionIconUrl DefaultValue="https://cdn.jsdelivr.net/gh/ovebepari/PhishMe@0.1/assets/icon-80.png"/>
+  <SupportUrl DefaultValue="https://github.com/ovebepari/PhishMe"/>
   <AppDomains>
-    <AppDomain>https://github.com/ovebepari/PhishIt</AppDomain>
+    <AppDomain>https://github.com/ovebepari/PhishMe</AppDomain>
   </AppDomains>
   <Hosts>
     <Host Name="Mailbox"/>
@@ -23,7 +23,7 @@
   <FormSettings>
     <Form xsi:type="ItemRead">
       <DesktopSettings>
-        <SourceLocation DefaultValue="https://cdn.jsdelivr.net/gh/ovebepari/PhishIt@0.1/taskpane.html"/>
+        <SourceLocation DefaultValue="https://cdn.jsdelivr.net/gh/ovebepari/PhishMe@0.1/taskpane.html"/>
         <RequestedHeight>250</RequestedHeight>
       </DesktopSettings>
     </Form>
@@ -74,19 +74,27 @@
         </DesktopFormFactor>
       </Host>
     </Hosts>
+    
+
     <Resources>
+     
       <bt:Images>
-        <bt:Image id="Icon.16x16" DefaultValue="https://cdn.jsdelivr.net/gh/ovebepari/PhishIt@0.1/assets/icon-16.png"/>
-        <bt:Image id="Icon.32x32" DefaultValue="https://cdn.jsdelivr.net/gh/ovebepari/PhishIt@0.1/assets/icon-32.png"/>
-        <bt:Image id="Icon.80x80" DefaultValue="https://cdn.jsdelivr.net/gh/ovebepari/PhishIt@0.1/assets/icon-80.png"/>
+        <bt:Image id="Icon.16x16" DefaultValue="https://cdn.jsdelivr.net/gh/ovebepari/PhishMe@0.1/assets/icon-16.png"/>
+        <bt:Image id="Icon.32x32" DefaultValue="https://cdn.jsdelivr.net/gh/ovebepari/PhishMe@0.1/assets/icon-32.png"/>
+        <bt:Image id="Icon.80x80" DefaultValue="https://cdn.jsdelivr.net/gh/ovebepari/PhishMe@0.1/assets/icon-80.png"/>
       </bt:Images>
+      
       <bt:Urls>
-        <bt:Url id="Commands.Url" DefaultValue="https://cdn.jsdelivr.net/gh/ovebepari/PhishIt@0.1/commands.html"/>
+        <bt:Url id="Commands.Url" DefaultValue="https://cdn.jsdelivr.net/gh/ovebepari/PhishMe@0.1/commands.html"/>
       </bt:Urls>
+
       <bt:ShortStrings>
-        <bt:String id="GroupLabel" DefaultValue="PhishIt Add-in"/>
-        <bt:String id="ActionButton.Label" DefaultValue="PhishIn"/>
+        <bt:String id="GroupLabel" DefaultValue="PhishMe Add-in"/>
+        <bt:String id="ActionButton.Label" DefaultValue="PhishMe"/>
+        <bt:String id="ActionButton.Tooltip" DefaultValue="Phish this email to sysadmin"/>
       </bt:ShortStrings>
+    
     </Resources>
+
   </VersionOverrides>
 </OfficeApp>
