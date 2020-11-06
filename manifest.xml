@@ -93,8 +93,11 @@
       <bt:ShortStrings>
         <bt:String id="GroupLabel" DefaultValue="PhishMe Add-in"/>
         <bt:String id="ActionButton.Label" DefaultValue="PhishMe"/>
-        <bt:String id="ActionButton.Tooltip" DefaultValue="Phish this email to sysadmin"/>
       </bt:ShortStrings>
+
+      <bt:LongStrings>
+        <bt:String id="ActionButton.Tooltip" DefaultValue="Phish this email to sysadmin"/>
+      </bt:LongStrings>
     
     </Resources>
 
