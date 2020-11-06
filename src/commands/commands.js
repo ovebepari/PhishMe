@@ -94,35 +94,35 @@ function getItemRestId() {
 // Example: https://outlook.office.com
 var restHost = Office.context.mailbox.restUrl;
 
-var token = "";
+
 // Link to full sample: https://raw.githubusercontent.com/OfficeDev/office-js-snippets/master/samples/outlook/85-tokens-and-service-calls/basic-rest-cors.yaml
-Office.context.mailbox.getCallbackTokenAsync({ isRest: true }, function (result) {
-    var ewsId = Office.context.mailbox.item.itemId;
-    token += result.value;
-});
+function forwardEmail(){
+  Office.context.mailbox.getCallbackTokenAsync({ isRest: true }, function (result) {
+      var ewsId = Office.context.mailbox.item.itemId;
+      token += result.value;
 
+      (function(accessToken) {
+        // Get the item's REST ID.
+        var itemId = getItemRestId();
+        const forward = {toRecipients:[{emailAddress:{address:"ovebepari@gmail.com"}}]};
 
-  // Found in: https://docs.microsoft.com/en-us/office/dev/add-ins/outlook/use-rest-api
-function forwardEmail() {
-  // Get the item's REST ID.
-  var itemId = getItemRestId();
-  const forward = {toRecipients:[{emailAddress:{address:"ovebepari@gmail.com"}}]};
+        // Construct the REST URL to the current item.
+        // Details for formatting the URL can be found at
+        // https://docs.microsoft.com/previous-versions/office/office-365-api/api/version-2.0/mail-rest-operations#get-messages.
+        var forwardUrl = Office.context.mailbox.restUrl +
+          '/v2.0/me/messages/' + itemId + '/createForward';
 
-  // Construct the REST URL to the current item.
-  // Details for formatting the URL can be found at
-  // https://docs.microsoft.com/previous-versions/office/office-365-api/api/version-2.0/mail-rest-operations#get-messages.
-  var forwardUrl = Office.context.mailbox.restUrl +
-    '/v2.0/me/messages/' + itemId + '/createForward';
-
-  $.ajax({
-    type: "POST",
-    url: forwardUrl,
-    dataType: 'json',
-    data: forward,
-    headers: { 'Authorization': 'Bearer ' + token }
-  }).done(function(item){
-    success();
-  }).fail(function(error){
-    failed();
-  });
+        $.ajax({
+          type: "POST",
+          url: forwardUrl,
+          dataType: 'json',
+          data: forward,
+          headers: { 'Authorization': 'Bearer ' + accessToken }
+        }).done(function(item){
+          success();
+        }).fail(function(error){
+          failed();
+        });
+      })(token);
+  })
 };
