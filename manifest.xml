@@ -6,8 +6,8 @@
   <DefaultLocale>en-US</DefaultLocale>
   <DisplayName DefaultValue="PhishMe"/>
   <Description DefaultValue="Report Phish Emails to System Admin"/>
-  <IconUrl DefaultValue="https://cdn.jsdelivr.net/gh/ovebepari/PhishMe@0.9/assets/icon-32.png"/>
-  <HighResolutionIconUrl DefaultValue="https://cdn.jsdelivr.net/gh/ovebepari/PhishMe@0.9/assets/icon-80.png"/>
+  <IconUrl DefaultValue="https://cdn.jsdelivr.net/gh/ovebepari/PhishMe@0.91/assets/icon-32.png"/>
+  <HighResolutionIconUrl DefaultValue="https://cdn.jsdelivr.net/gh/ovebepari/PhishMe@0.91/assets/icon-80.png"/>
   <SupportUrl DefaultValue="https://github.com/ovebepari/PhishMe"/>
   <AppDomains>
     <AppDomain>https://github.com/ovebepari/PhishMe</AppDomain>
@@ -24,7 +24,7 @@
   <FormSettings>
     <Form xsi:type="ItemRead">
       <DesktopSettings>
-        <SourceLocation DefaultValue="https://cdn.jsdelivr.net/gh/ovebepari/PhishMe@0.9/src/taskpane/taskpane.html"/>
+        <SourceLocation DefaultValue="https://cdn.jsdelivr.net/gh/ovebepari/PhishMe@0.91/src/taskpane/taskpane.html"/>
         <RequestedHeight>250</RequestedHeight>
       </DesktopSettings>
     </Form>
@@ -86,13 +86,13 @@
     <Resources>
      
       <bt:Images>
-        <bt:Image id="Icon.16x16" DefaultValue="https://cdn.jsdelivr.net/gh/ovebepari/PhishMe@0.9/assets/icon-16.png"/>
-        <bt:Image id="Icon.32x32" DefaultValue="https://cdn.jsdelivr.net/gh/ovebepari/PhishMe@0.9/assets/icon-32.png"/>
-        <bt:Image id="Icon.80x80" DefaultValue="https://cdn.jsdelivr.net/gh/ovebepari/PhishMe@0.9/assets/icon-80.png"/>
+        <bt:Image id="Icon.16x16" DefaultValue="https://cdn.jsdelivr.net/gh/ovebepari/PhishMe@0.91/assets/icon-16.png"/>
+        <bt:Image id="Icon.32x32" DefaultValue="https://cdn.jsdelivr.net/gh/ovebepari/PhishMe@0.91/assets/icon-32.png"/>
+        <bt:Image id="Icon.80x80" DefaultValue="https://cdn.jsdelivr.net/gh/ovebepari/PhishMe@0.91/assets/icon-80.png"/>
       </bt:Images>
       
       <bt:Urls>
-        <bt:Url id="Commands.Url" DefaultValue="https://cdn.jsdelivr.net/gh/ovebepari/PhishMe@0.9/src/commands/commands.html"/>
+        <bt:Url id="Commands.Url" DefaultValue="https://cdn.jsdelivr.net/gh/ovebepari/PhishMe@0.91/src/commands/commands.html"/>
       </bt:Urls>
 
       <bt:ShortStrings>
