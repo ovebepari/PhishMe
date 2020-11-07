@@ -68,15 +68,6 @@ function getGlobal() {
     : undefined;
 }
 
-const g = getGlobal();
-
-// the add-in command functions need to be available in global scope
-g.action = action;
-g.success = success;
-g.failed = failed;
-g.forwardEmail = forwardEmail;
-
-
 
 // Ove starts to code from here
 // code found in: https://docs.microsoft.com/en-us/office/dev/add-ins/outlook/use-rest-api
@@ -121,10 +112,28 @@ function forwardEmail(event){
           dataType: 'json',
           data: forward,
           headers: { 'Authorization': 'Bearer ' + accessToken }
-        }).done(success).fail(failed);
+        }).done(function(item){
+          success();
+        }).fail(function(error){
+          failed();
+        });
       })(token);
   });
 };
+
+
+
+const g = getGlobal();
+
+// the add-in command functions need to be available in global scope
+g.action = action;
+g.success = success;
+g.failed = failed;
+g.forwardEmail = forwardEmail;
+
+
+
+
 
 
 /*
