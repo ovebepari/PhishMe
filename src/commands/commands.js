@@ -44,7 +44,7 @@ function success(event) {
 
 function failed(event) {
   const message = {
-    type: Office.MailboxEnums.ItemNotificationMessageType.InformationalMessage,
+    type: Office.MailboxEnums.ItemNotificationMessageType.ErrorMessage,
     message: "Email Forwarding failed, contact the add in developer!",
     icon: "Icon.80x80",
     persistent: true
@@ -72,6 +72,9 @@ const g = getGlobal();
 
 // the add-in command functions need to be available in global scope
 g.action = action;
+g.success = success;
+g.failed = failed;
+g.forwardEmail = forwardEmail;
 
 
 
@@ -96,10 +99,10 @@ var restHost = Office.context.mailbox.restUrl;
 
 
 // Link to full sample: https://raw.githubusercontent.com/OfficeDev/office-js-snippets/master/samples/outlook/85-tokens-and-service-calls/basic-rest-cors.yaml
-function forwardEmail(){
+function forwardEmail(event){
   Office.context.mailbox.getCallbackTokenAsync({ isRest: true }, function (result) {
       var ewsId = Office.context.mailbox.item.itemId;
-      token += result.value;
+      var token = result.value;
 
       (function(accessToken) {
         // Get the item's REST ID.
@@ -124,5 +127,5 @@ function forwardEmail(){
           failed();
         });
       })(token);
-  })
+  });
 };
