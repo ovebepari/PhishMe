@@ -71,7 +71,7 @@
                     <!-- This function is what I need to execute 
                     <FunctionName>forwardEmail</FunctionName>
                     -->
-                    <FunctionName>success</FunctionName>
+                    <FunctionName>forwardEmail</FunctionName>
                   </Action>
                 </Control>
 
