@@ -7,58 +7,6 @@ Office.onReady(() => {
   // If needed, Office.js is ready to be called
 });
 
-
-/**
- * Shows a notification when the add-in command is executed.
- * @param event {Office.AddinCommands.Event}
- */
-function action(event) {
-  const message = {
-    type: Office.MailboxEnums.ItemNotificationMessageType.InformationalMessage,
-    message: "Performed action.",
-    icon: "Icon.80x80",
-    persistent: true
-  };
-
-  // Show a notification message
-  Office.context.mailbox.item.notificationMessages.replaceAsync("action", message);
-
-  // Be sure to indicate when the add-in command function is complete
-  event.completed();
-}
-
-
-function success(event) {
-  const message = {
-    type: Office.MailboxEnums.ItemNotificationMessageType.InformationalMessage,
-    message: "Email Forward Successful!",
-    icon: "Icon.80x80",
-    persistent: true
-  };
-
-  // Show a notification message
-  Office.context.mailbox.item.notificationMessages.replaceAsync("action", message);
-
-  // Be sure to indicate when the add-in command function is complete
-  event.completed();
-}
-
-function failed(event) {
-  const message = {
-    type: Office.MailboxEnums.ItemNotificationMessageType.ErrorMessage,
-    message: "Email Forwarding failed, contact the add in developer!",
-    icon: "Icon.80x80",
-    persistent: true
-  };
-
-  // Show a notification message
-  Office.context.mailbox.item.notificationMessages.replaceAsync("action", message);
-
-  // Be sure to indicate when the add-in command function is complete
-  event.completed();
-}
-
-
 function getGlobal() {
   return typeof self !== "undefined"
     ? self
@@ -71,16 +19,31 @@ function getGlobal() {
 
 const g = getGlobal();
 
-// the add-in command functions need to be available in global scope
-g.action = action;
-g.success = success;
-g.failed = failed;
 
+function sucessNotif() {
+  var id = "0";
+  var details = {
+    type: "informationalMessage",
+    icon: "icon1",
+    message: "Email forward successful!",
+    persistent: false
+  };
+  Office.context.mailbox.item.notificationMessages.addAsync(id, details, function(value) {});
+}
 
-// Ove starts to code from here
-// code found in: https://docs.microsoft.com/en-us/office/dev/add-ins/outlook/use-rest-api
+function failedNOtif() {
+  var id = "0";
+  var details = {
+    type: "informationalMessage",
+    icon: "icon1",
+    message: "Email forward failed!",
+    persistent: false
+  };
+  Office.context.mailbox.item.notificationMessages.addAsync(id, details, function(value) {});
+}
+
 function getItemRestId() {
-  if (Office.context.mailbox.diagnostics.hostName === 'OutlookIOS') {
+  if (Office.context.mailbox.diagnostics.hostName === "OutlookIOS") {
     // itemId is already REST-formatted.
     return Office.context.mailbox.item.itemId;
   } else {
@@ -92,107 +55,48 @@ function getItemRestId() {
   }
 }
 
-
-// Example: https://outlook.office.com
-var restHost = Office.context.mailbox.restUrl;
-
-
-var accessToken;
-async function getAcessToken(){
-  Office.context.mailbox.getCallbackTokenAsync({ isRest: true }, function (result) {
-      var ewsId = Office.context.mailbox.item.itemId;
-      accessToken = result.value;
-    }
-  );
+function simpleForwardEmail() {
+  Office.context.mailbox.getCallbackTokenAsync({ isRest: true }, function(result) {
+    var ewsId = Office.context.mailbox.item.itemId;
+    var accessToken = result.value;
+    simpleForwardFunc(accessToken);
+  });
 }
 
 
-
-/*
-  Main function that simply forwards email
-*/
-// Link to full sample: https://raw.githubusercontent.com/OfficeDev/office-js-snippets/master/samples/outlook/85-tokens-and-service-calls/basic-rest-cors.yaml
-function simpleForwardEmail(event){
-    Office.context.mailbox.getCallbackTokenAsync({ isRest: true }, function (result) {
-      var ewsId = Office.context.mailbox.item.itemId;
-      accessToken = result.value;
-      simpleForwardFunc(accessToken);
-    });
-
-};
-
-
-function simpleForwardFunc(accessToken){
+function simpleForwardFunc(accessToken) {
   var itemId = getItemRestId();
 
+  // Construct the REST URL to the current item.
+  // Details for formatting the URL can be found at
+  // https://docs.microsoft.com/previous-versions/office/office-365-api/api/version-2.0/mail-rest-operations#get-messages.
+  var forwardUrl = Office.context.mailbox.restUrl + "/v2.0/me/messages/" + itemId + "/forward";
+
   const metadata = {
-    "Comment": "FYI",
-    "ToRecipients": [
+    comment: "FYI",
+    toRecipients: [
       {
-        "EmailAddress": {
-          "Address": "ovebepari@gmail.com"
+        emailAddress: {
+          name: "Ove Bepari",
+          address: "ovebepari@gmail.com"
         }
       }
     ]
   };
 
-  // Construct the REST URL to the current item.
-  // Details for formatting the URL can be found at
-  // https://docs.microsoft.com/previous-versions/office/office-365-api/api/version-2.0/mail-rest-operations#get-messages.
-  var forwardUrl = Office.context.mailbox.restUrl +
-    '/v2.0/me/messages/' + itemId + '/forward';
-
   $.ajax({
-    type: "POST",
     url: forwardUrl,
-    dataType: 'json',
+    type: "POST",
+    contentType: "application/json",
     data: metadata,
-    headers: { 'Authorization': 'Bearer ' + accessToken }
-  }).done(function(){
-    Office.context.ui.displayDialogAsync('https://ovebepari.github.io/', {height: 30, width: 20, displayInIframe: true});
-    success();
-  }).fail(failed);
+    headers: { Authorization: "Bearer " + accessToken }
+  })
+    .done(function(response, status) {
+      sucessNotif();
+      console.log("Success!");
+    })
+    .fail(function(response, status) {
+      failedNOtif();
+      console.log("failed " + status);
+    });
 }
-
-g.forwardEmail = simpleForwardEmail;
-
-
-
-
-
-/*
-
-// Link to full sample: https://raw.githubusercontent.com/OfficeDev/office-js-snippets/master/samples/outlook/85-tokens-and-service-calls/basic-rest-cors.yaml
-function forwardEmail(event){
-  Office.context.mailbox.getCallbackTokenAsync({ isRest: true }, function (result) {
-      var ewsId = Office.context.mailbox.item.itemId;
-      var token = result.value;
-
-      (function(accessToken) {
-        // Get the item's REST ID.
-        var itemId = getItemRestId();
-        const forward = {toRecipients:[{emailAddress:{address:"ovebepari@gmail.com"}}]};
-
-        // Construct the REST URL to the current item.
-        // Details for formatting the URL can be found at
-        // https://docs.microsoft.com/previous-versions/office/office-365-api/api/version-2.0/mail-rest-operations#get-messages.
-        var forwardUrl = Office.context.mailbox.restUrl +
-          '/v2.0/me/messages/' + itemId + '/createForward';
-
-        $.ajax({
-          type: "POST",
-          url: forwardUrl,
-          dataType: 'json',
-          data: forward,
-          headers: { 'Authorization': 'Bearer ' + accessToken }
-        }).done(function(item){
-          success();
-        }).fail(function(error){
-          failed();
-        });
-      })(token);
-  });
-};
-
-
-*/
