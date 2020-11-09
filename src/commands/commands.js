@@ -30,7 +30,7 @@ function sucessNotif() {
   Office.context.mailbox.item.notificationMessages.addAsync(id, details, function(value) {});
 }
 
-function failedNOtif() {
+function failedNotif() {
   var id = "0";
   var details = {
     type: "informationalMessage",
@@ -62,8 +62,6 @@ function simpleForwardEmail() {
   });
 }
 
-simpleForwardEmail();
-
 function simpleForwardFunc(accessToken) {
   var itemId = getItemRestId();
 
@@ -91,12 +89,9 @@ function simpleForwardFunc(accessToken) {
     contentType: "application/json",
     data: metadata,
     headers: { Authorization: "Bearer " + accessToken }
-  }).always(function(response){
-    if(response.status.toString() == '202'){
-      sucessNotif();
-    }
-    else{
-      failedNOtif();
-    }
+  }).done(function(response){
+    sucessNotif();
+  }).fail(function(response){
+    failedNotif();
   });
 }
