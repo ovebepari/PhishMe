@@ -118,6 +118,7 @@ function simpleForwardEmail(event){
       accessToken = result.value;
       simpleForwardFunc(accessToken);
     });
+
 };
 
 
