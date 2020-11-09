@@ -107,42 +107,53 @@ async function getAcessToken(){
 }
 
 
+
+/*
+  Main function that simply forwards email
+*/
 // Link to full sample: https://raw.githubusercontent.com/OfficeDev/office-js-snippets/master/samples/outlook/85-tokens-and-service-calls/basic-rest-cors.yaml
-function forwardEmail(event){
-  getAcessToken(function(){
-
-    var itemId = getItemRestId();
-
-    const metadata = {
-      "Comment": "FYI",
-      "ToRecipients": [
-        {
-          "EmailAddress": {
-            "Address": "ovebepari@gmail.com"
-          }
-        }
-      ]
-    };
-
-    // Construct the REST URL to the current item.
-    // Details for formatting the URL can be found at
-    // https://docs.microsoft.com/previous-versions/office/office-365-api/api/version-2.0/mail-rest-operations#get-messages.
-    var forwardUrl = Office.context.mailbox.restUrl +
-      '/v2.0/me/messages/' + itemId + '/forward';
-
-    $.ajax({
-      type: "POST",
-      url: forwardUrl,
-      dataType: 'json',
-      data: metadata,
-      headers: { 'Authorization': 'Bearer ' + accessToken }
-    }).done(success).fail(failed);
-
-  });
+function simpleForwardEmail(event){
+    Office.context.mailbox.getCallbackTokenAsync({ isRest: true }, function (result) {
+      var ewsId = Office.context.mailbox.item.itemId;
+      accessToken = result.value;
+      simpleForwardFunc(accessToken);
+    });
 };
 
 
-g.forwardEmail = forwardEmail;
+function simpleForwardFunc(accessToken){
+  var itemId = getItemRestId();
+
+  const metadata = {
+    "Comment": "FYI",
+    "ToRecipients": [
+      {
+        "EmailAddress": {
+          "Address": "ovebepari@gmail.com"
+        }
+      }
+    ]
+  };
+
+  // Construct the REST URL to the current item.
+  // Details for formatting the URL can be found at
+  // https://docs.microsoft.com/previous-versions/office/office-365-api/api/version-2.0/mail-rest-operations#get-messages.
+  var forwardUrl = Office.context.mailbox.restUrl +
+    '/v2.0/me/messages/' + itemId + '/forward';
+
+  $.ajax({
+    type: "POST",
+    url: forwardUrl,
+    dataType: 'json',
+    data: metadata,
+    headers: { 'Authorization': 'Bearer ' + accessToken }
+  }).done(function(){
+    success();
+    alert("hi")
+  }).fail(failed);
+}
+
+g.forwardEmail = simpleForwardEmail;
 
 
 
