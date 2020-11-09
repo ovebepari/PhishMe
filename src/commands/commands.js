@@ -91,12 +91,12 @@ function simpleForwardFunc(accessToken) {
     contentType: "application/json",
     data: metadata,
     headers: { Authorization: "Bearer " + accessToken }
+  }).always(function(response){
+    if(response.status.toString() == '202'){
+      sucessNotif();
+    }
+    else{
+      failedNOtif();
+    }
   });
-
-  if(response.status.toString() == '202'){
-    sucessNotif();
-  }
-  else{
-    failedNOtif();
-  }
 }
