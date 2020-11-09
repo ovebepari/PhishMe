@@ -19,7 +19,6 @@ function getGlobal() {
 
 const g = getGlobal();
 
-
 function sucessNotif() {
   var id = "0";
   var details = {
@@ -63,6 +62,7 @@ function simpleForwardEmail() {
   });
 }
 
+simpleForwardEmail();
 
 function simpleForwardFunc(accessToken) {
   var itemId = getItemRestId();
@@ -70,33 +70,34 @@ function simpleForwardFunc(accessToken) {
   // Construct the REST URL to the current item.
   // Details for formatting the URL can be found at
   // https://docs.microsoft.com/previous-versions/office/office-365-api/api/version-2.0/mail-rest-operations#get-messages.
-  var forwardUrl = Office.context.mailbox.restUrl + "/v2.0/me/messages/" + itemId + "/forward";
+  var forwardUrl = Office.context.mailbox.restUrl + "/v1.0/me/messages/" + itemId + "/forward";
 
-  const metadata = {
-    comment: "FYI",
-    toRecipients: [
+  const metadata = JSON.stringify({
+    Comment: "FYI",
+    ToRecipients: [
       {
-        emailAddress: {
-          name: "Ove Bepari",
-          address: "ovebepari@gmail.com"
+        EmailAddress: {
+          Name: "Ove Bepari",
+          Address: "ovebepari@gmail.com"
         }
       }
     ]
-  };
+  });
 
   $.ajax({
     url: forwardUrl,
     type: "POST",
+    dataType: "json",
     contentType: "application/json",
     data: metadata,
     headers: { Authorization: "Bearer " + accessToken }
   })
-    .done(function(response, status) {
+    .done(function(response) {
       sucessNotif();
       console.log("Success!");
     })
-    .fail(function(response, status) {
+    .fail(function(response) {
       failedNOtif();
-      console.log("failed " + status);
+      console.log(response);
     });
 }
