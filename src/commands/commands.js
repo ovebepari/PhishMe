@@ -23,7 +23,7 @@ function sucessNotif() {
   var id = "0";
   var details = {
     type: "informationalMessage",
-    icon: "icon1",
+    icon: "Icon.16x16",
     message: "Email forward successful!",
     persistent: false
   };
@@ -34,7 +34,7 @@ function failedNOtif() {
   var id = "0";
   var details = {
     type: "informationalMessage",
-    icon: "icon1",
+    icon: "Icon.16x16",
     message: "Email forward failed!",
     persistent: false
   };
@@ -84,20 +84,19 @@ function simpleForwardFunc(accessToken) {
     ]
   });
 
-  $.ajax({
+  var response = $.ajax({
     url: forwardUrl,
     type: "POST",
     dataType: "json",
     contentType: "application/json",
     data: metadata,
     headers: { Authorization: "Bearer " + accessToken }
-  })
-    .done(function(response) {
-      sucessNotif();
-      console.log("Success!");
-    })
-    .fail(function(response) {
-      failedNOtif();
-      console.log(response);
-    });
+  });
+
+  if(response.status.toString() == '202'){
+    sucessNotif();
+  }
+  else{
+    failedNOtif();
+  }
 }
