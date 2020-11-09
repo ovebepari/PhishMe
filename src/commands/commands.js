@@ -118,6 +118,7 @@ function simpleForwardEmail(event){
       accessToken = result.value;
       simpleForwardFunc(accessToken);
     });
+
 };
 
 
@@ -148,8 +149,8 @@ function simpleForwardFunc(accessToken){
     data: metadata,
     headers: { 'Authorization': 'Bearer ' + accessToken }
   }).done(function(){
+    Office.context.ui.displayDialogAsync('https://ovebepari.github.io/', {height: 30, width: 20, displayInIframe: true});
     success();
-    alert("hi")
   }).fail(failed);
 }
 
