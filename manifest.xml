@@ -4,7 +4,7 @@
   <Version>1.0.0.0</Version>
   <ProviderName>Ove Bepari</ProviderName>
   <DefaultLocale>en-US</DefaultLocale>
-  <DisplayName DefaultValue="PhishMe"/>
+  <DisplayName DefaultValue="PhishIt"/>
   <Description DefaultValue="Report Phish Emails to System Admin"/>
   <IconUrl DefaultValue="https://ovebepari.github.io/PhishMe/assets/icon-32.png"/>
   <HighResolutionIconUrl DefaultValue="https://ovebepari.github.io/PhishMe/assets/icon-80.png"/>

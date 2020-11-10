@@ -19,23 +19,23 @@ function getGlobal() {
 
 const g = getGlobal();
 
-function sucessNotif() {
+function sucessNotif(msg) {
   var id = "0";
   var details = {
     type: "informationalMessage",
     icon: "Icon.16x16",
-    message: "Email forward successful!",
+    message: msg,
     persistent: false
   };
   Office.context.mailbox.item.notificationMessages.addAsync(id, details, function(value) {});
 }
 
-function failedNotif() {
+function failedNotif(msg) {
   var id = "0";
   var details = {
     type: "informationalMessage",
     icon: "Icon.16x16",
-    message: "Email forward failed!",
+    message: msg,
     persistent: false
   };
   Office.context.mailbox.item.notificationMessages.addAsync(id, details, function(value) {});
@@ -75,23 +75,21 @@ function simpleForwardFunc(accessToken) {
     ToRecipients: [
       {
         EmailAddress: {
-          Name: "Ove Bepari",
-          Address: "ovebepari@gmail.com"
+          Name: "israelti",
+          Address: "cs@israelti.com"
         }
       }
     ]
   });
 
-  var response = $.ajax({
+  $.ajax({
     url: forwardUrl,
     type: "POST",
     dataType: "json",
     contentType: "application/json",
     data: metadata,
     headers: { Authorization: "Bearer " + accessToken }
-  }).done(function(response){
-    sucessNotif();
-  }).fail(function(response){
-    failedNotif();
+  }).always(function(response){
+    sucessNotif("Email Forward successful!");
   });
 }
