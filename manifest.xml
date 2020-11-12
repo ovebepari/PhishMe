@@ -73,7 +73,7 @@
                   </Action>
                 </Control>
 
-                <Control xsi:type="Button" id="ActionButton">
+                <Control xsi:type="Button" id="SendAttachedButton">
                   <Label resid="SendAttached.Label"/>
                   <Supertip>
                     <Title resid="SendAttached.Label"/>
