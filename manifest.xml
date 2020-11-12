@@ -55,7 +55,8 @@
               <Group id="msgReadGroup">
                 <Label resid="GroupLabel"/>
 
-                <!-- Each control provides a button -->
+                <!-- Each control provides a button forwardAsAttachment -->
+
                 <Control xsi:type="Button" id="ActionButton">
                   <Label resid="ActionButton.Label"/>
                   <Supertip>
@@ -69,6 +70,22 @@
                   </Icon>
                   <Action xsi:type="ExecuteFunction">
                     <FunctionName>simpleForwardEmail</FunctionName>
+                  </Action>
+                </Control>
+
+                <Control xsi:type="Button" id="ActionButton">
+                  <Label resid="ActionButton.Label2"/>
+                  <Supertip>
+                    <Title resid="ActionButton.Label2"/>
+                    <Description resid="ActionButton.Tooltip2"/>
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.16x16"/>
+                    <bt:Image size="32" resid="Icon.32x32"/>
+                    <bt:Image size="80" resid="Icon.80x80"/>
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>forwardAsAttachment</FunctionName>
                   </Action>
                 </Control>
 
@@ -94,11 +111,13 @@
 
       <bt:ShortStrings>
         <bt:String id="GroupLabel" DefaultValue="PhishMe Add-in"/>
-        <bt:String id="ActionButton.Label" DefaultValue="PhishMe"/>
+        <bt:String id="ActionButton.Label" DefaultValue="PhishIt"/>
+        <bt:String id="ActionButton.Label2" DefaultValue="PhishIt as Attachment"/>
       </bt:ShortStrings>
 
       <bt:LongStrings>
         <bt:String id="ActionButton.Tooltip" DefaultValue="Phish this email to sysadmin"/>
+        <bt:String id="ActionButton.Tooltip2" DefaultValue="Phish this email to sysadmin as attachment"/>
       </bt:LongStrings>
     
     </Resources>

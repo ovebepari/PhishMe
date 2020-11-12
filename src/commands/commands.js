@@ -54,6 +54,7 @@ function getItemRestId() {
   }
 }
 
+/* Simple Forward */
 function simpleForwardEmail() {
   Office.context.mailbox.getCallbackTokenAsync({ isRest: true }, function(result) {
     var ewsId = Office.context.mailbox.item.itemId;
@@ -70,7 +71,7 @@ function simpleForwardFunc(accessToken) {
   // https://docs.microsoft.com/previous-versions/office/office-365-api/api/version-2.0/mail-rest-operations#get-messages.
   var forwardUrl = Office.context.mailbox.restUrl + "/v1.0/me/messages/" + itemId + "/forward";
 
-  const metadata = JSON.stringify({
+  const forwardMeta = JSON.stringify({
     Comment: "FYI",
     ToRecipients: [
       {
@@ -87,9 +88,70 @@ function simpleForwardFunc(accessToken) {
     type: "POST",
     dataType: "json",
     contentType: "application/json",
-    data: metadata,
+    data: forwardMeta,
     headers: { Authorization: "Bearer " + accessToken }
   }).always(function(response){
     sucessNotif("Email Forward successful!");
   });
+}
+
+
+/* Forward as Attachment */
+function forwardAsAttachment(){
+  Office.context.mailbox.getCallbackTokenAsync({ isRest: true }, function(result) {
+    var ewsId = Office.context.mailbox.item.itemId;
+    var accessToken = result.value;
+    forwardAsAttachmentFunc(accessToken);
+  });
+}
+
+function forwardAsAttachmentFunc(accessToken) {
+  var itemId = getItemRestId();
+  var getAnItemUrl = Office.context.mailbox.restUrl + "/v1.0/me/messages/" + itemId;
+  var sendItemUrl = Office.context.mailbox.restUrl + "/v1.0/me/sendmail";
+
+  $.ajax({
+    url: getAnItemUrl,
+    type: "GET",
+    contentType: "application/json",
+    headers: { Authorization: "Bearer " + accessToken }
+  }).done(function (responseItem) {
+    responseItem['@odata.type'] = "microsoft.graph.outlookItem";
+    
+    /* Now send mail */
+    const sendMeta = JSON.stringify({
+      "Message": {
+        "Subject": "Please Check for Phish Activities!",
+        "Body": {
+          "ContentType": "Text",
+          "Content": "Please Check for Phish Activities and let us know!"
+        },
+        "ToRecipients": [{
+          "EmailAddress": {
+            "Address": "ovebepari@gmail.com"
+          }
+        }],
+        "Attachments": [
+          {
+            "@odata.type": "#Microsoft.OutlookServices.ItemAttachment",
+            "Name": "Email Attachment",
+            "Item": responseItem
+          }
+        ]
+      },
+      "SaveToSentItems": "false"
+    }); // Json.stringify ends
+
+    $.ajax({
+      url: sendItemUrl,
+      type: "POST",
+      dataType: "json",
+      contentType: "application/json",
+      data: sendMeta,
+      headers: { Authorization: "Bearer " + accessToken }
+    }).always(function (response) {
+      sucessNotif("Email forward as attachment successful!");
+    }); // ajax of send mail ends
+
+  }); // ajax.get.done ends
 }
