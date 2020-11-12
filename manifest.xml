@@ -74,10 +74,10 @@
                 </Control>
 
                 <Control xsi:type="Button" id="ActionButton">
-                  <Label resid="ActionButton.Label2"/>
+                  <Label resid="ActionButtonAttach.Label"/>
                   <Supertip>
-                    <Title resid="ActionButton.Label2"/>
-                    <Description resid="ActionButton.Tooltip2"/>
+                    <Title resid="ActionButtonAttach.Label"/>
+                    <Description resid="ActionButtonAttach.Tooltip"/>
                   </Supertip>
                   <Icon>
                     <bt:Image size="16" resid="Icon.16x16"/>
@@ -112,12 +112,12 @@
       <bt:ShortStrings>
         <bt:String id="GroupLabel" DefaultValue="PhishMe Add-in"/>
         <bt:String id="ActionButton.Label" DefaultValue="PhishIt"/>
-        <bt:String id="ActionButton.Label2" DefaultValue="PhishIt as Attachment"/>
+        <bt:String id="ActionButtonAttach.Label" DefaultValue="PhishIt as Attachment"/>
       </bt:ShortStrings>
 
       <bt:LongStrings>
         <bt:String id="ActionButton.Tooltip" DefaultValue="Phish this email to sysadmin"/>
-        <bt:String id="ActionButton.Tooltip2" DefaultValue="Phish this email to sysadmin as attachment"/>
+        <bt:String id="ActionButtonAttach.Tooltip" DefaultValue="Phish this email to sysadmin as attachment"/>
       </bt:LongStrings>
     
     </Resources>
