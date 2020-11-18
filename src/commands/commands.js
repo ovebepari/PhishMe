@@ -116,7 +116,9 @@ function forwardAsAttachmentFunc(accessToken) {
     contentType: "application/json",
     headers: { Authorization: "Bearer " + accessToken }
   }).done(function (responseItem) {
-    responseItem['@odata.type'] = "microsoft.graph.outlookItem";
+    // #microsoft.graph.message
+    // microsoft.graph.outlookItem
+    responseItem['@odata.type'] = "#microsoft.graph.message";
     
     /* Now send mail */
     const sendMeta = JSON.stringify({
@@ -134,7 +136,8 @@ function forwardAsAttachmentFunc(accessToken) {
         "Attachments": [
           {
             "@odata.type": "#Microsoft.OutlookServices.ItemAttachment",
-            "Name": "Email Attachment",
+            // #microsoft.graph.message
+            "Name": responseItem.subject,
             "Item": responseItem
           }
         ]
@@ -149,8 +152,10 @@ function forwardAsAttachmentFunc(accessToken) {
       contentType: "application/json",
       data: sendMeta,
       headers: { Authorization: "Bearer " + accessToken }
-    }).always(function (response) {
+    }).done(function (response) {
       sucessNotif("Email forward as attachment successful!");
+    }).fail(function(response){
+      failedNotif("Email forward as attachment failed, contact the developer!");
     }); // ajax of send mail ends
 
   }); // ajax.get.done ends
