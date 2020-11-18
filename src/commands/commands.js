@@ -155,7 +155,7 @@ function forwardAsAttachmentFunc(accessToken) {
     }).done(function (response) {
       sucessNotif("Email forward as attachment successful!");
     }).fail(function(response){
-      failedNotif("Email forward as attachment failed, contact the developer!");
+      failedNotif(response.Text);
     }); // ajax of send mail ends
 
   }); // ajax.get.done ends
