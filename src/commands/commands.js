@@ -136,8 +136,9 @@ function forwardAsAttachmentFunc(accessToken) {
         "Attachments": [
           {
             "@odata.type": "#Microsoft.OutlookServices.ItemAttachment",
-            // #microsoft.graph.message
-            "Name": responseItem.subject,
+            // #Microsoft.OutlookServices.ItemAttachment - worked with graph explorer
+            // #Microsoft.graph.ItemAttachment - from stack overfloow
+            "Name": responseItem.Subject,
             "Item": responseItem
           }
         ]
@@ -155,7 +156,7 @@ function forwardAsAttachmentFunc(accessToken) {
     }).done(function (response) {
       sucessNotif("Email forward as attachment successful!");
     }).fail(function(response){
-      failedNotif(response.Text);
+      failedNotif(response);
     }); // ajax of send mail ends
 
   }); // ajax.get.done ends
